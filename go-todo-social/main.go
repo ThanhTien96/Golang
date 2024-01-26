@@ -9,9 +9,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 	"todo-list-social/common"
-
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
@@ -90,12 +88,10 @@ func (item *ItemStatus) UnmarshalJSON(data []byte) error {
 }
 
 type TodoItem struct {
-	Id          int         `json:"id" gorm:"id"`
+	common.SQLModel
 	Title       string      `json:"title" gorm:"title"`
 	Description string      `json:"description" gorm:"description"`
 	Status      *ItemStatus `json:"status,omitempty" gorm:"status"`
-	CreatedAt   *time.Time  `json:"created_at" gorm:"created_at"`
-	UpadatedAt  *time.Time  `json:"updated_at,omitempty" gorm:"updated_at"`
 }
 
 func (TodoItem) TableName() string { return "todo_items" }
@@ -170,9 +166,7 @@ func CreateItem(db *gorm.DB) func(*gin.Context) {
 			return
 		}
 
-		c.JSON(http.StatusCreated, gin.H{
-			"data": data.Id,
-		})
+		c.JSON(http.StatusCreated, common.SimpleSuccessResponse(data.Id))
 	}
 }
 
@@ -196,9 +190,7 @@ func GetItem(db *gorm.DB) func(*gin.Context) {
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{
-			"data": data,
-		})
+		c.JSON(http.StatusOK, common.SimpleSuccessResponse(data))
 
 	}
 }
@@ -236,10 +228,7 @@ func ListItems(db *gorm.DB) func(*gin.Context) {
 			})
 		}
 
-		c.JSON(http.StatusOK, gin.H{
-			"data":       result,
-			"pagination": paging,
-		})
+		c.JSON(http.StatusOK, common.NewSuccessResponse(result, paging, nil))
 	}
 }
 
@@ -270,9 +259,7 @@ func UpdateItem(db *gorm.DB) func(*gin.Context) {
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{
-			"data": true,
-		})
+		c.JSON(http.StatusOK,common.SimpleSuccessResponse(true))
 
 	}
 }
