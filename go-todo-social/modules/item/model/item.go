@@ -5,6 +5,9 @@ import (
 	"todo-list-social/common"
 )
 
+const (
+	EntityName = "Item"
+)
 
 var (
 	ErrTitleIsBlank = errors.New("title cannot be blank")

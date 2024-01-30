@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 	"os"
+	"todo-list-social/middleware"
 	"todo-list-social/modules/item/transport/gin"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
@@ -26,7 +28,9 @@ func main() {
 
 	r := gin.Default()
 
-	v1 := r.Group("/v1")
+	// r.Use(middleware.Recovery())
+
+	v1 := r.Group("/v1", middleware.Recovery())
 	{
 		items := v1.Group("/items")
 		{
