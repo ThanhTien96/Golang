@@ -26,7 +26,7 @@ func main() {
 	var cfg config
 
 	// Read the value of the port and env command-line
-	flag.IntVar(&cfg.port, "port", 5050, "API server port")
+	flag.IntVar(&cfg.port, "port", 4000, "API server port")
 	flag.StringVar(&cfg.env, "env", "development", "Enviroment (developer | staging | production)")
 	flag.Parse()
 

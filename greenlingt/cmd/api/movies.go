@@ -23,11 +23,12 @@ func (app *application) showMovieHandler(w http.ResponseWriter, r *http.Request)
 		CreatedAt: time.Now(),
 		Title:     "Casablanca",
 		Runtime:   120,
+		Year: 1999,
 		Genres:    []string{"drama", "romance", "war"},
 		Version:   1,
 	}
 
-	err = app.writeJSON(w, http.StatusOK, movie, nil)
+	err = app.writeJSON(w, http.StatusOK, envelope{"movie":movie}, nil)
 
 	if err != nil {
 		app.logger.Println(err)

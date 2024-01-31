@@ -3,12 +3,13 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"strconv"
-
 	"github.com/julienschmidt/httprouter"
 )
+
+
+type envelope map[string]interface{}
 
 func (app *application) readIDParam(r *http.Request) (int64, error) {
 	params := httprouter.ParamsFromContext(r.Context())
@@ -24,16 +25,15 @@ func (app *application) readIDParam(r *http.Request) (int64, error) {
 }
 
 // Define a writeJson() helper for sending responses.
-func (app *application) writeJSON(w http.ResponseWriter, status int, data interface{}, header http.Header) error {
+func (app *application) writeJSON(w http.ResponseWriter, status int, data envelope, header http.Header) error {
 	// Encode the data to JSON, returning the error if there was one
-	js, err := json.Marshal(data)
+	js, err := json.MarshalIndent(data,"","\t")
 	if err != nil {
 		return err
 	}
 
 	// append a newline to make it easer to view in terminal application.
 	js = append(js, '\n')
-	fmt.Println(string(js))
 	/**
 	At this point, we know that we won't encounter any more error before writing the response
 	**/
