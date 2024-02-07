@@ -16,6 +16,8 @@ type config struct {
 	env  string
 }
 
+// :BOOK PAGE 98
+
 type application struct {
 	config config
 	logger *log.Logger
