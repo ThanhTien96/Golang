@@ -30,7 +30,7 @@ func (v *Validator) Check(ok bool, key, message string) {
 	}
 }
 
-func IN(value string, list ...string) bool {
+func In(value string, list ...string) bool {
 	for i := range list {
 		if value == list[i] {
 			return true
@@ -52,5 +52,4 @@ func Unique(values []string) bool {
 	}
 	return len(values) == len(uniqueValues)
 }
-
 
