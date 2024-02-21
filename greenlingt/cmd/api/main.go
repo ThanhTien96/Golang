@@ -33,6 +33,9 @@ func main() {
 	// Read the value of the port and env command-line
 	flag.IntVar(&cfg.port, "port", 4000, "API server port")
 	flag.StringVar(&cfg.env, "env", "development", "Enviroment (developer | staging | production)")
+
+	// Read the DSN value from the db-dsn command-line flag into the config struct. We default to using our development DSN if no flag is profided.
+	flag.StringVar(&cfg.db.dns, "db-dsn", "postgres://greenlight:admin@localhost/greenlight", "PostgreSQL DSN")
 	flag.Parse()
 
 
